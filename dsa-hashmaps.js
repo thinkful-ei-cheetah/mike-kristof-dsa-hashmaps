@@ -1,9 +1,9 @@
 class HashMap {
   constructor(initialCapacity = 8) {
-    this.length = 0;
-    this._hashTable = [];
-    this._capacity = initialCapacity;
-    this._deleted = 0;
+    this.length = 0; // how many spots taken
+    this._hashTable = []; // the actual data storage
+    this._capacity = initialCapacity; // max amount it can hold
+    this._deleted = 0; // a count of how many items are deleted 
   }
 
   get(key) {
@@ -19,7 +19,7 @@ class HashMap {
     if (loadRatio > HashMap.MAX_LOAD_RATIO) {
       this._resize(this._capacity * HashMap.SIZE_RATIO);
     }
-    //Find the slot where this key should be in
+    // Find the slot where this key should be in
     const index = this._findSlot(key);
 
     if (!this._hashTable[index]) {
@@ -74,15 +74,15 @@ class HashMap {
   static _hashString(string) {
     let hash = 5381;
     for (let i = 0; i < string.length; i++) {
-      //Bitwise left shift with 5 0s - this would be similar to
-      //hash*31, 31 being the decent prime number
-      //but bit shifting is a faster way to do this
-      //tradeoff is understandability
+      // Bitwise left shift with 5 0s - this would be similar to
+      // hash*31, 31 being the decent prime number
+      // but bit shifting is a faster way to do this
+      // tradeoff is understandability
       hash = (hash << 5) + hash + string.charCodeAt(i);
-      //converting hash to a 32 bit integer
+      // converting hash to a 32 bit integer
       hash = hash & hash;
     }
-    //making sure has is unsigned - meaning non-negtive number.
+    // making sure has is unsigned - meaning non-negtive number.
     return hash >>> 0;
   }
 }
