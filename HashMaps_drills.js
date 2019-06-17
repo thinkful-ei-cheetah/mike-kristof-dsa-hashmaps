@@ -1,4 +1,5 @@
 const { HashMap } = require('./dsa-hashmaps');
+const { HashMap_SepChain } = require('./HashMaps_SepChain');
 
 HashMap.MAX_LOAD_RATIO = 0.5;
 HashMap.SIZE_RATIO = 3;
@@ -111,14 +112,39 @@ function palindrome(str) {
 
 // 6. Anagram grouping
 const sort = (word) => word.split('').sort().join('');
-function anagrams(words) {
-  let map = new Map();
-  words.forEach(word => {
-    const groupedWords = sort(word);
-    const group = map.get(groupedWords) || [];
-    map.set(groupedWords, [...group, word]);
+function anagrams(words) { 
+  let map = new Map(); 
+  words.forEach(word => { // east
+    const groupedWords = sort(word); // 1st run: aest
+    const group = map.get(groupedWords) || []; // 1st run: become []
+    map.set(groupedWords, [...group, word]); // (aest (this is []) , east)
   })
   return Array.from(map.values());
 }
-console.log(anagrams(['east', 'cars', 'acre', 'arcs', 'teas', 'eats', 'race']));
+// console.log(anagrams(['east', 'cars', 'acre', 'arcs', 'teas', 'eats', 'race']));
 
+function sepMain() {
+  const lotr = new HashMap_SepChain();
+  const data = [
+    { Hobbit: 'Bilbo' },
+    { Hobbit: 'Frodo' },
+    { Wizard: 'Gandolf' },
+    { Human: 'Aragon' },
+    { Elf: 'Legolas' },
+    { Maiar: 'The Necromancer' },
+    { Maiar: 'Sauron' },
+    { RingBearer: 'Gollum' },
+    { LadyOfLight: 'Galadriel' },
+    { HalfElven: 'Arwen' },
+    { Ent: 'Treebeard' }
+  ];
+  data.forEach(item => {
+    const key = Object.keys(item);
+    lotr.set(key[0], item[key[0]])
+  })
+
+  console.log(lotr);
+  console.log(lotr.get('Maiar'));
+  console.log(lotr.get('Hobbit'));
+}
+sepMain();
